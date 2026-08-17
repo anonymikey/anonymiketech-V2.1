@@ -106,6 +106,8 @@ export function LoaderProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
+  const heroReady = Boolean(readySources["hero-frames"]);
+
   const resourceReady = LOADER_CONFIG.requiredResources.every(
     (source) => readySources[source],
   );
@@ -130,7 +132,7 @@ export function LoaderProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const canReveal = isInitialBoot
-      ? videoComplete
+      ? videoComplete && heroReady
       : miniElapsed;
     if (canReveal) {
       const timer = window.setTimeout(
@@ -144,6 +146,7 @@ export function LoaderProvider({ children }: { children: React.ReactNode }) {
     return undefined;
   }, [
     completeBoot,
+    heroReady,
     isInitialBoot,
     miniElapsed,
     videoComplete,

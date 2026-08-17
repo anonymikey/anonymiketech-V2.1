@@ -12,6 +12,7 @@ import { PageTransition } from '@/components/transitions/PageTransition';
 import { AmbientEngine } from '@/components/ambient/AmbientEngine';
 import { GlobalHUD } from '@/components/hud/GlobalHUD';
 import { CommandPalette } from '@/components/command/CommandPalette';
+import { PlatformExperience } from '@/components/platform/PlatformExperience';
 
 function AppContent() {
   const { isAppReady } = useLoader();
@@ -31,6 +32,7 @@ function AppContent() {
           <CinematicReveal />
           <SynthSection />
           <SystemsNominal />
+          <PlatformExperience />
         </main>
         <Footer />
       </div>

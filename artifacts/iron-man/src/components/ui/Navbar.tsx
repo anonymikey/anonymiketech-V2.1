@@ -46,7 +46,7 @@ export function Navbar() {
             Systems
           </a>
           <a
-            href="#footer"
+            href="#archive"
             className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-400 transition-colors hover:text-foreground"
           >
             Archive
@@ -54,7 +54,7 @@ export function Navbar() {
         </nav>
 
         <a
-          href="#systems"
+          href="#engage"
           data-cursor-magnet
           className="group inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-foreground backdrop-blur-md transition-all duration-200 hover:bg-white/[0.1] active:translate-y-[1px]"
         >
