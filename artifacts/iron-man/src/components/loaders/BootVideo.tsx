@@ -10,6 +10,7 @@ type Props = {
 export function BootVideo({ active, onProgress, onComplete }: Props) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const completedRef = useRef(false);
+  const fallbackRef = useRef<number | null>(null);
 
   const finishVideo = () => {
     if (completedRef.current) return;
@@ -29,10 +30,12 @@ export function BootVideo({ active, onProgress, onComplete }: Props) {
       LOADER_CONFIG.videoDurationMs + LOADER_CONFIG.videoCompletionGraceMs,
     );
     void video.play().catch(() => {
-      // Muted autoplay is supported by modern browsers; if it is blocked,
-      // the visible overlay remains in place rather than skipping boot.
+      fallbackRef.current = window.setTimeout(finishVideo, 900);
     });
-    return () => window.clearTimeout(completionFallback);
+    return () => {
+      window.clearTimeout(completionFallback);
+      if (fallbackRef.current !== null) window.clearTimeout(fallbackRef.current);
+    };
   }, [active]);
 
   if (!active) return null;
@@ -52,7 +55,6 @@ export function BootVideo({ active, onProgress, onComplete }: Props) {
         if (video.duration > 0) {
           const progress = video.currentTime / video.duration;
           onProgress(progress);
-          if (progress >= 0.985) finishVideo();
         }
       }}
       onLoadedMetadata={(event) => {
@@ -60,7 +62,13 @@ export function BootVideo({ active, onProgress, onComplete }: Props) {
         if (video.duration > 0) onProgress(0);
       }}
       onEnded={finishVideo}
-      onError={finishVideo}
+      onError={() => {
+        onProgress(0.18);
+        fallbackRef.current = window.setTimeout(() => {
+          onProgress(1);
+          finishVideo();
+        }, 900);
+      }}
     />
   );
 }

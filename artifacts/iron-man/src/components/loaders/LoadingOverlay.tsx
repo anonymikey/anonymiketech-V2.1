@@ -26,7 +26,15 @@ export function LoadingOverlay({ progress, status, mini = false }: Props) {
             <span className="loading-mini-core__ring loading-mini-core__ring--two" />
             <BrandMark className="h-24 w-24" animated />
           </div>
-        ) : null}
+        ) : (
+          <div className="loading-boot-core" aria-hidden="true">
+            <span className="loading-boot-core__bracket loading-boot-core__bracket--tl" />
+            <span className="loading-boot-core__bracket loading-boot-core__bracket--tr" />
+            <span className="loading-boot-core__bracket loading-boot-core__bracket--bl" />
+            <span className="loading-boot-core__bracket loading-boot-core__bracket--br" />
+            <BrandMark className="h-32 w-32 md:h-40 md:w-40" animated />
+          </div>
+        )}
         <p className="loading-overlay__eyebrow">
           <span className="loading-overlay__dot" />
           ANONYMIKETECH // {mini ? "RECONNECTING" : "SYSTEM INITIALIZING"}
